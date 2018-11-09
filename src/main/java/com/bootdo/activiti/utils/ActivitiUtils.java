@@ -19,6 +19,12 @@ public class ActivitiUtils {
     TaskService taskService;
     @Autowired
     RuntimeService runtimeService;
+
+    /**
+     *  由任务编号获取实例编号，由实例编号获取业务主键
+     * @param taskId
+     * @return
+     */
     public String getBusinessKeyByTaskId(String taskId){
         Task task = taskService
                 .createTaskQuery()

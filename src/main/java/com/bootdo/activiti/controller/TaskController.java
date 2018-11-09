@@ -5,8 +5,11 @@ import com.bootdo.activiti.vo.ProcessVO;
 import com.bootdo.activiti.vo.TaskVO;
 import com.bootdo.common.utils.PageUtils;
 import org.activiti.engine.FormService;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,8 @@ public class TaskController {
     TaskService taskService;
     @Autowired
     ActTaskService actTaskService;
+    @Autowired
+    HistoryService historyService;
     @GetMapping("goto")
     public ModelAndView gotoTask(){
         return new ModelAndView("act/task/gotoTask");
@@ -76,6 +81,10 @@ public class TaskController {
         return new ModelAndView("act/task/todoTask");
     }
 
+    /**
+     * 我的任务 待办事项
+     * @return
+     */
     @GetMapping("/todoList")
     List<TaskVO> todoList(){
         List<Task> tasks = taskService.createTaskQuery().taskAssignee("admin").list();
@@ -87,6 +96,19 @@ public class TaskController {
         return taskVOS;
     }
 
+    /**
+     * 我的历史任务
+     * @return
+     */
+    @GetMapping("/hisTaskList")
+    Object hisTaskList(){
+        HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
+        List<HistoricTaskInstance> list = query.list();
+        for ( HistoricTaskInstance hpi : list){
+            System.out.println(hpi.getId() + ":" + hpi.getAssignee() + ":" + hpi.getName());
+        }
+        return null ;
+    }
 
     /**
      * 读取带跟踪的图片

@@ -5,14 +5,14 @@ import java.util.List;
 
 public class RoleDO {
 	
-	private Long roleId;
-	private String roleName;
-	private String roleSign;
+	private Long roleId;//角色编号
+	private String roleName;//角色名称
+	private String roleSign;//角色标识
 	private String remark;
 	private Long userIdCreate;
 	private Timestamp gmtCreate;
 	private Timestamp gmtModified;
-	private List<Long> menuIds;
+	private List<Long> menuIds;//角色权限菜单
 
 	public Long getRoleId() {
 		return roleId;
