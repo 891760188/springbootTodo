@@ -12,6 +12,7 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.history.HistoricTaskInstanceQuery;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.Task;
+import org.apache.xerces.xs.datatypes.ObjectList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
 
@@ -103,11 +104,27 @@ public class TaskController {
     @GetMapping("/hisTaskList")
     Object hisTaskList(){
         HistoricTaskInstanceQuery query = historyService.createHistoricTaskInstanceQuery();
-        List<HistoricTaskInstance> list = query.list();
+        List<HistoricTaskInstance> list = query.taskAssignee("admin").list();
+        Set<Map<String,Object>> resultSet = new HashSet<Map<String,Object>>();
         for ( HistoricTaskInstance hpi : list){
             System.out.println(hpi.getId() + ":" + hpi.getAssignee() + ":" + hpi.getName());
+            Map<String,Object> resultMap = new HashMap<String,Object>();
+            resultMap.put("name",hpi.getName());//节点名称
+            resultMap.put("assignee",hpi.getAssignee());//操作人
+            resultMap.put("id",hpi.getId());//任务编号
+//            resultMap.put("startTime",(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(hpi.getStartTime()));//开始时间
+//            resultMap.put("endTime",(new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(hpi.getEndTime()));//开始时间
+            resultMap.put("deleteReason",hpi.getDeleteReason());
+            resultSet.add(resultMap);
         }
-        return null ;
+        Iterator<Map<String,Object>> iterator = resultSet.iterator();
+        while (iterator.hasNext()){
+            Map<String,Object> map = iterator.next();
+            if(null == map.get("deleteReason")){
+                iterator.remove();
+            }
+        }
+        return resultSet ;
     }
 
     /**
