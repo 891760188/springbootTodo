@@ -3109,7 +3109,7 @@
         setScrollTop(cm, Math.max(0, Math.min(scroll.scrollTop + dy * wheelPixelsPerUnit, scroll.scrollHeight - scroll.clientHeight)));
       setScrollLeft(cm, Math.max(0, Math.min(scroll.scrollLeft + dx * wheelPixelsPerUnit, scroll.scrollWidth - scroll.clientWidth)));
       e_preventDefault(e);
-      display.wheelStartX = null; // Abort measurement, if in progress
+      display.wheelStartX = null; // Abort measurement, if in process
       return;
     }
 

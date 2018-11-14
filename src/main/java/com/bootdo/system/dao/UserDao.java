@@ -17,7 +17,12 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserDao {
 
 	UserDO get(Long userId);
-	
+
+	//获取第一个节点审批人
+	List<Map<String,Object>>  getAuditPsn(Map<String,String> map);
+	//获取第一个以后节点审批人
+	List<Map<String,Object>>  getAuditPsnQuery(Map<String,String> map);
+
 	List<UserDO> list(Map<String,Object> map);
 	
 	int count(Map<String,Object> map);

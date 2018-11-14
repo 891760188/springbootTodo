@@ -542,7 +542,7 @@ var ProcessDiagramGenerator = {
 			cnt += sequenceFlows.length;
 		var step = (cnt>0)? 100/cnt : 0;
 		var progress = 0;
-		//console.log("progress bar step: ", step);
+		//console.log("process bar step: ", step);
 		
 		var task1 = new $.AsyncQueue();
 		
@@ -825,7 +825,7 @@ var ProcessDiagramGenerator = {
 			console.log('Get HighLights['+processDefinitionId+'] failure: ', textStatus, jqXHR);
 		});
 		*/
-		// ½â¾öÎÞÁ÷³ÌÊµÀýµÄÊ±ºòÅ×³öÒì³£ÎÊÌâ¡£
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½×³ï¿½ï¿½ì³£ï¿½ï¿½ï¿½â¡£
 		var url = Lang.sub(ActivitiRest.options.processInstanceUrl, {processInstanceId: processInstanceId});
 		var _drawHighLights = this._drawHighLights;
 		$.ajax({

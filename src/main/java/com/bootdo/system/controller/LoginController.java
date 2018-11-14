@@ -9,6 +9,7 @@ import com.bootdo.common.utils.MD5Utils;
 import com.bootdo.common.utils.R;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.system.domain.MenuDO;
+import com.bootdo.system.domain.UserDO;
 import com.bootdo.system.service.MenuService;
 import io.swagger.models.auth.In;
 import org.apache.shiro.SecurityUtils;
@@ -69,7 +70,7 @@ public class LoginController extends BaseController {
 	@Log("登录")
 	@PostMapping("/login")
 	@ResponseBody
-	R ajaxLogin(String username, String password) {
+	R ajaxLogin(UserDO userDO, String username, String password) {
 
 		password = MD5Utils.encrypt(username, password);
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);

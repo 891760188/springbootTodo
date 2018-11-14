@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bootdo.activiti.dao.AduitViewDao" >
+  <resultMap id="BaseResultMap" type="com.bootdo.activiti.domain.AduitView" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="aduit_psn" property="aduitPsn" jdbcType="VARCHAR" />
+    <result column="aduit_state" property="aduitState" jdbcType="VARCHAR" />
+    <result column="aduit_view" property="aduitView" jdbcType="VARCHAR" />
+    <result column="business_key" property="businessKey" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, aduit_psn, aduit_state, aduit_view, business_key, task_id, create_time, remark, 
+    type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from aduit_view
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from aduit_view
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bootdo.activiti.domain.AduitView" >
+    insert into aduit_view (id, aduit_psn, aduit_state, 
+      aduit_view, business_key, task_id, 
+      create_time, remark, type
+      )
+    values (#{id,jdbcType=INTEGER}, #{aduitPsn,jdbcType=VARCHAR}, #{aduitState,jdbcType=VARCHAR}, 
+      #{aduitView,jdbcType=VARCHAR}, #{businessKey,jdbcType=VARCHAR}, #{taskId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bootdo.activiti.domain.AduitView" >
+    insert into aduit_view
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="aduitPsn != null" >
+        aduit_psn,
+      </if>
+      <if test="aduitState != null" >
+        aduit_state,
+      </if>
+      <if test="aduitView != null" >
+        aduit_view,
+      </if>
+      <if test="businessKey != null" >
+        business_key,
+      </if>
+      <if test="taskId != null" >
+        task_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="aduitPsn != null" >
+        #{aduitPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitState != null" >
+        #{aduitState,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitView != null" >
+        #{aduitView,jdbcType=VARCHAR},
+      </if>
+      <if test="businessKey != null" >
+        #{businessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bootdo.activiti.domain.AduitView" >
+    update aduit_view
+    <set >
+      <if test="aduitPsn != null" >
+        aduit_psn = #{aduitPsn,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitState != null" >
+        aduit_state = #{aduitState,jdbcType=VARCHAR},
+      </if>
+      <if test="aduitView != null" >
+        aduit_view = #{aduitView,jdbcType=VARCHAR},
+      </if>
+      <if test="businessKey != null" >
+        business_key = #{businessKey,jdbcType=VARCHAR},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bootdo.activiti.domain.AduitView" >
+    update aduit_view
+    set aduit_psn = #{aduitPsn,jdbcType=VARCHAR},
+      aduit_state = #{aduitState,jdbcType=VARCHAR},
+      aduit_view = #{aduitView,jdbcType=VARCHAR},
+      business_key = #{businessKey,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

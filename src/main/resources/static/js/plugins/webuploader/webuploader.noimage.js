@@ -752,7 +752,7 @@
             cancelFile: 'cancel-file',
             skipFile: 'skip-file',
             retry: 'retry',
-            isInProgress: 'is-in-progress',
+            isInProgress: 'is-in-process',
             makeThumb: 'make-thumb',
             md5File: 'md5-file',
             getDimension: 'get-dimension',
@@ -2111,7 +2111,7 @@
          * 文件状态值，具体包括以下几种类型：
          * * `inited` 初始状态
          * * `queued` 已经进入队列, 等待上传
-         * * `progress` 上传中
+         * * `process` 上传中
          * * `complete` 上传完成。
          * * `error` 上传出错，可重试
          * * `interrupt` 上传中断，可续传。
@@ -3352,7 +3352,7 @@
                             act.file.getStatus() !== Status.PROGRESS &&
                             act.file.getStatus() !== Status.INTERRUPT ) {
 
-                        // 把已经处理完了的，或者，状态为非 progress（上传中）、
+                        // 把已经处理完了的，或者，状态为非 process（上传中）、
                         // interupt（暂停中） 的移除。
                         this.stack.splice( --i, 1 );
                     }
@@ -4903,7 +4903,7 @@
                 var me = this,
                     xhr = new RuntimeClient('XMLHttpRequest');
 
-                xhr.on( 'uploadprogress progress', function( e ) {
+                xhr.on( 'uploadprogress process', function( e ) {
                     var percent = e.loaded / e.total;
                     percent = Math.min( 1, Math.max( 0, percent ) );
                     return me.trigger( 'progress', percent );

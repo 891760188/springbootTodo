@@ -68,7 +68,7 @@ layui.define('jquery', function(exports){
   
   //动态改变进度条
   Element.prototype.progress = function(filter, percent){
-    var ELEM = 'layui-progress'
+    var ELEM = 'layui-process'
     ,elem = $('.'+ ELEM +'[lay-filter='+ filter +']')
     ,elemBar = elem.find('.'+ ELEM +'-bar')
     ,text = elemBar.find('.'+ ELEM +'-text');
@@ -352,11 +352,11 @@ layui.define('jquery', function(exports){
       
       //进度条
       ,progress: function(){
-        var ELEM = 'layui-progress';
+        var ELEM = 'layui-process';
         
         $('.'+ELEM).each(function(){
           var othis = $(this)
-          ,elemBar = othis.find('.layui-progress-bar')
+          ,elemBar = othis.find('.layui-process-bar')
           ,width = elemBar.attr('lay-percent');
           elemBar.css('width', width);
           if(othis.attr('lay-showPercent')){

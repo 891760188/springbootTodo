@@ -43,9 +43,9 @@
                 fullscreen: '[data-player="fullscreen"]'
             },
             progress: {
-                container: '.player-progress',
-                buffer: '.player-progress-buffer',
-                played: '.player-progress-played'
+                container: '.player-process',
+                buffer: '.player-process-buffer',
+                played: '.player-process-played'
             },
             captions: '.player-captions',
             currentTime: '.player-current-time',
@@ -104,18 +104,18 @@
 
     // Build the default HTML
     function _buildControls() {
-        // Open and add the progress and seek elements
+        // Open and add the process and seek elements
         var html = [
         '<div class="player-controls">',
-            '<div class="player-progress">',
+            '<div class="player-process">',
                 '<label for="seek{id}" class="sr-only">Seek</label>',
-                '<input id="seek{id}" class="player-progress-seek" type="range" min="0" max="100" step="0.5" value="0" data-player="seek">',
-                '<progress class="player-progress-played" max="100" value="0">',
+                '<input id="seek{id}" class="player-process-seek" type="range" min="0" max="100" step="0.5" value="0" data-player="seek">',
+                '<process class="player-process-played" max="100" value="0">',
                     '<span>0</span>% ' + config.i18n.played,
-                '</progress>',
-                '<progress class="player-progress-buffer" max="100" value="0">',
+                '</process>',
+                '<process class="player-process-buffer" max="100" value="0">',
                     '<span>0</span>% ' + config.i18n.buffered,
-                '</progress>',
+                '</process>',
             '</div>',
             '<span class="player-controls-left">'];
 
@@ -980,7 +980,7 @@
                             // Get loaded % from YouTube
                             player.media.buffered = instance.getVideoLoadedFraction();
 
-                            // Trigger progress
+                            // Trigger process
                             _triggerEvent(player.media, 'progress');
 
                             // Bail if we're at 100%
@@ -1025,7 +1025,7 @@
                             player.media.paused = false;
                             _triggerEvent(player.media, 'play');
 
-                            // Poll to get playback progress
+                            // Poll to get playback process
                             player.timer.playing = window.setInterval(function () {
                                 // Set the current time
                                 player.media.currentTime = instance.getCurrentTime();
@@ -1516,7 +1516,7 @@
             }, (loading ? 250 : 0));
         }
 
-        // Update <progress> elements
+        // Update <process> elements
         function _updateProgress(event) {
             var progress = player.progress.played.bar,
                 text = player.progress.played.text,
@@ -1616,7 +1616,7 @@
             // Duration
             _updateTimeDisplay(player.media.currentTime, player.currentTime);
 
-            // Playing progress
+            // Playing process
             _updateProgress(event);
         }
 
@@ -1818,8 +1818,8 @@
                 _checkPlaying();
             });
 
-            // Check for buffer progress
-            _on(player.media, 'progress playing', _updateProgress);
+            // Check for buffer process
+            _on(player.media, 'process playing', _updateProgress);
 
             // Handle native mute
             _on(player.media, 'volumechange', _updateVolume);

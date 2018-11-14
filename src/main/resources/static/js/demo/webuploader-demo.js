@@ -99,14 +99,14 @@ jQuery(function() {
         var $li = $( '<li id="' + file.id + '">' +
                 '<p class="title">' + file.name + '</p>' +
                 '<p class="imgWrap"></p>'+
-                '<p class="progress"><span></span></p>' +
+                '<p class="process"><span></span></p>' +
                 '</li>' ),
 
             $btns = $('<div class="file-panel">' +
                 '<span class="cancel">删除</span>' +
                 '<span class="rotateRight">向右旋转</span>' +
                 '<span class="rotateLeft">向左旋转</span></div>').appendTo( $li ),
-            $prgress = $li.find('p.progress span'),
+            $prgress = $li.find('p.process span'),
             $wrap = $li.find( 'p.imgWrap' ),
             $info = $('<p class="error"></p>'),
 
@@ -355,7 +355,7 @@ jQuery(function() {
 
     uploader.onUploadProgress = function( file, percentage ) {
         var $li = $('#'+file.id),
-            $percent = $li.find('.progress span');
+            $percent = $li.find('.process span');
 
         $percent.css( 'width', percentage * 100 + '%' );
         percentages[ file.id ][ 1 ] = percentage;
