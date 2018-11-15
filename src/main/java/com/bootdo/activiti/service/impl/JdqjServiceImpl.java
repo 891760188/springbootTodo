@@ -5,18 +5,18 @@ import com.bootdo.activiti.dao.JdqjDao;
 import com.bootdo.activiti.domain.AduitView;
 import com.bootdo.activiti.domain.Jdqj;
 import com.bootdo.activiti.service.JdqjService;
+import com.bootdo.common.utils.Query;
 import com.bootdo.common.utils.ShiroUtils;
 import com.bootdo.system.dao.UserDao;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class JdqjServiceImpl implements JdqjService {
@@ -32,6 +32,10 @@ public class JdqjServiceImpl implements JdqjService {
 
     @Resource
     private RuntimeService runtimeService ;
+
+    @Resource
+    private TaskService taskService ;
+
 
     @Override
     @Transactional
@@ -91,8 +95,39 @@ public class JdqjServiceImpl implements JdqjService {
 //        vars.put("title","title001");
 
 //        ProcessInstance procIns = runtimeService.startProcessInstanceByKey("jdqjKey",aduitMap);
-        ProcessInstance procIns = runtimeService.startProcessInstanceByKey("jdqjId004",jdqj.getId().toString(),aduitMap);
+        ProcessInstance procIns = runtimeService.startProcessInstanceByKey("jdqjId006",jdqj.getId().toString(),aduitMap);
 
         return null;
+    }
+
+    @Override
+    public List<Jdqj> list(Map<String,Object> map) {
+        map.put("crPsn",ShiroUtils.getUser().getUserId());
+        return jdqjDao.list(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> myTask(Map<String, Object> map) {
+        String userId = ShiroUtils.getUser().getUserId().toString();
+        List<Task> tasks = taskService.createTaskQuery().taskAssignee(userId).list();
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        for(Task task : tasks){
+            Map<String,Object> temp = new HashMap<String,Object>();
+            list.add(temp);
+            temp.put("taskId",task.getId());
+            temp.put("name",task.getName());
+        }
+        return list;
+    }
+
+    @Override
+    public int complete(Map<String, Object> variables) {
+        Map<String,Object> var1 = new HashMap<String,Object>();
+        var1.put("opinion",variables.get("variables"));
+        taskService.setVariablesLocal(variables.get("taskId").toString(), var1);
+        Map<String,Object> var2 = new HashMap<String,Object>();
+        var2.put("pass",variables.get("pass"));
+        taskService.complete(variables.get("taskId").toString(),var2);
+        return 0;
     }
 }
